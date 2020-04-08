@@ -2,33 +2,52 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
-username=input("Enter mail...?")
-password=input("ENter Password..")
+def Details():
+    username = input("Enter Email or Phone no. : ")
+    password = input("Enter Password : ")
 
-url = 'https://www.facebook.com/'
+    login(username,password)
 
-driver = webdriver.Chrome("/home/vaibhav18/Desktop/chromedriver")
+def login(username,password):
+    url = 'https://www.facebook.com/'
 
-driver.get(url)
+    driver = webdriver.Chrome("/home/vaibhav18/Desktop/chromedriver")
 
-driver.find_element_by_id('email').send_keys(username)
-driver.find_element_by_id('pass').send_keys(password)
+    driver.get(url)
 
-time.sleep(2)
+    driver.find_element_by_id('email').send_keys(username)
+    driver.find_element_by_id('pass').send_keys(password)
 
-driver.find_element_by_id('loginbutton').click()
+    time.sleep(2)
+
+    driver.find_element_by_id('loginbutton').click()
+
+    
+    
+
+    try:
+        b=driver.find_element(By.XPATH, "//*[@name='xhpc_message']").send_keys("Hello this post is using python...")
+        print ("Succefully logged In...")
+        time.sleep(5)
+
+        button = driver.find_elements_by_tag_name('button')
+
+        for b in button:
+            if b.text == "Post":
+                b.click()
+        return
+    except Exception as e:
+        print("Email or Password Incorrect...")
+        if (input("Do u Want try again...(Y/N)?").upper() == 'Y'):
+            Details()
+        else:
+            return 
+
+            
+if __name__ == "__main__":
+    Details()
 
 
-driver.find_element(By.XPATH, "//*[@name='xhpc_message']").send_keys("Hello this is Mahadev...")
-
-time.sleep(5)
-
-button = driver.find_elements_by_tag_name('button')
-
-for b in button:
-    if b.text == "Post":
-        b.click()
-        
 
 
 
